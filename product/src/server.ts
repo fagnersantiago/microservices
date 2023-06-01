@@ -1,9 +1,10 @@
 import express from "express";
-import { router } from "./modules/infra/routes";
+import "./modules/infra/provider/kafka/index";
+import { router } from "./modules/infra/router";
 
 const app = express();
 
-const PORT = process.env.PORT ?? 3000;
+const PORT = process.env.PORT ?? 3003;
 
 app.use(express.json());
 app.use(router);

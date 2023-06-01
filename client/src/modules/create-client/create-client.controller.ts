@@ -10,7 +10,7 @@ export class CreateClientController {
 
       return response.status(201).json(client);
     } catch (error) {
-      console.log(error);
+      return response.status(400).json(error);
     }
   }
 }
