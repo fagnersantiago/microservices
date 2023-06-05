@@ -1,25 +1,25 @@
 import { prismaClient } from "../../../modules/infra/database/prisma-client";
 import { kafkaConusmer } from "./kafka-consumer";
 
-type ClientConsumer = {
+type ProductConsumer = {
   id: string;
-  email: string;
+  code: string;
 };
-export async function createClientConsumer() {
+export async function createProductConsumer() {
   console.log("COSUMER");
-  const consumer = await kafkaConusmer("CLIENT_CREATED");
+  const consumer = await kafkaConusmer("PRODUCT_CREATED");
   await consumer.run({
     eachMessage: async ({ message }: any) => {
       const messageToString = message.value.toString();
-      const client = JSON.parse(messageToString) as ClientConsumer;
+      const product = JSON.parse(messageToString) as ProductConsumer;
 
-      await prismaClient.orderCostumer.create({
+      await prismaClient.product.create({
         data: {
-          externalId: client.id,
-          email: client.email,
+          externalId: product.id,
+          code: product.code,
         },
       });
     },
   });
 }
-createClientConsumer();
+createProductConsumer();

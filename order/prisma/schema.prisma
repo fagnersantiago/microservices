@@ -17,3 +17,11 @@ model OrderCostumer {
 
   @@map("order")
 }
+
+model Product {
+  id         String @id @default(uuid())
+  externalId String
+  code       String @unique
+
+  @@map("products")
+}
