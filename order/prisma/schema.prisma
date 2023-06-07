@@ -33,6 +33,8 @@ model Ordered {
   orderCostumer OrderCostumer @relation(fields: [customerId], references: [id])
   customerId    String
   OrderItems    OrderItems[]
+  status        String
+  createdAt     DateTime
 
   @@map("ordered")
 }
