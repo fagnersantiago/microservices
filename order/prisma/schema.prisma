@@ -11,17 +11,40 @@ datasource db {
 }
 
 model OrderCostumer {
-  id         String @id @default(uuid())
+  id         String    @id @default(uuid())
   externalId String
-  email      String @unique
+  email      String    @unique
+  Ordered    Ordered[]
 
   @@map("order")
 }
 
 model Product {
-  id         String @id @default(uuid())
+  id         String       @id @default(uuid())
   externalId String
-  code       String @unique
+  code       String       @unique
+  OrderItems OrderItems[]
 
   @@map("products")
+}
+
+model Ordered {
+  id            String        @id @default(uuid())
+  orderCostumer OrderCostumer @relation(fields: [customerId], references: [id])
+  customerId    String
+  OrderItems    OrderItems[]
+
+  @@map("ordered")
+}
+
+model OrderItems {
+  id        String  @id @default(uuid())
+  product   Product @relation(fields: [productId], references: [id])
+  ordered   Ordered @relation(fields: [orderedId], references: [id])
+  order     String
+  quantity  Float
+  productId String
+  orderedId String
+
+  @@map("order_items")
 }
